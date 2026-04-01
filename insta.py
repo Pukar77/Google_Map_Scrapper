@@ -2,8 +2,13 @@ import os
 import json
 from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
+from langchain_google_genai import GoogleGenerativeAI
 
 load_dotenv()
+
+GEMINI_API_KEY = os.getenv("gemini_api_key")
+
+model = GoogleGenerativeAI(model="gemini-2.5-flash")
 
 LOGIN_URL = "https://www.instagram.com/accounts/login/"
 PROFILE_URL = "https://www.instagram.com/babalwears/"
@@ -285,6 +290,25 @@ def main():
 
             with open("instagram_scraped_data.json", "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=4, ensure_ascii=False)
+                prompt = f"""
+                You are a product insights analyst. You will receive multiple user comments from an Instagram post about a product. Your tasks are:
+
+                1. Analyze the overall sentiment of the comments (Positive, Negative, Neutral).
+                2. Summarize the main points mentioned by users about the product.
+                3. Highlight any recurring issues, praises, or feedback.
+                4. Provide actionable suggestions for the company based on user sentiment.
+                5. Keep the output concise, clear, and structured.
+
+                Comments: 
+
+                {data}
+
+                
+                """
+                response = model.invoke(prompt)
+                
+                with open("feedback.txt","w",encoding="utf-8") as f:
+                    f.write(response)
 
             print("Done. Saved to instagram_scraped_data.json")
 
