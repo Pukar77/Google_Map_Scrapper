@@ -1,4 +1,4 @@
-﻿# Scammer Detection Automation Suite
+﻿# Google Map Scrapper and Insta Automation Site
 
 A Python automation project that helps collect business intelligence from two sources:
 
