@@ -32,8 +32,8 @@ Install the following on any computer:
 ### 1) Clone the repository
 
 ```bash
-git clone <YOUR_REPOSITORY_URL>
-cd Scammer_detection
+git clone <REPOSITORY_URL>
+cd Google_Map_Scrapper
 ```
 
 ### 2) Create and activate a virtual environment
